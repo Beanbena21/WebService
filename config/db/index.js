@@ -1,8 +1,9 @@
 const mongoose = require('mongoose')
+require('dotenv').config()
 
 async function connect() {
     try {
-        await mongoose.connect('mongodb://localhost:27017/fet_kltn', {
+        await mongoose.connect( process.env.MONGO_URL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useFindAndModify: false,
@@ -12,7 +13,7 @@ async function connect() {
     }catch(e){
         console.log('connect failure!')
     }
-
 }
 
 module.exports = { connect }
+
