@@ -1,6 +1,17 @@
 const User = require('../models/User');
 
 class UserController {
+
+    //Login and Sign in user
+    registerUser(req, res) {
+
+    }
+
+    loginUser(req, res) {
+
+    }
+    
+    //API
     listAll(req, res) {
         //C1
         // User.find({}, function(err, users) {

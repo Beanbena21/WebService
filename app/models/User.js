@@ -8,11 +8,11 @@ const Schema = mongoose.Schema;
 
 const User = new Schema({
   //_id: { type: Sequelize.INTEGER, primaryKey: true},
-  user_name: { type: String, maxlength: 255, required: true},
-  user_password: { type: String, maxlength: 255, required: true},
+  user_name: { type: String, minlength: 3  , maxlength: 255, required: true},
+  user_password: { type: String, maxLength: 1024, required: true},
   //email: { type: String, maxlength: 255 },
   //facebook: { type: String, maxlength: 255},
-},{ versionKey: false })//, { _id: false, timestamps : true });
+},{ versionKey: false }, {timestamps : true });
 
 
 //Course.plugin(AutoIncrement)
