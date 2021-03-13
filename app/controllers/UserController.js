@@ -4,7 +4,16 @@ class UserController {
 
     //Login and Sign in user
     registerUser(req, res) {
+        //check user_name and email exist in database
+        User.findOne({ user_name: req.body.user_name ,email: req.body.email}, function(err, users) {
+            if(users) res.status(400).send('exist')
+        })
 
+            
+        const users = new User(req.body)
+        users.save()
+        .then(users => res.json(users))
+        .catch(err => res.status(500).json(err))
     }
 
     loginUser(req, res) {
