@@ -10,7 +10,7 @@ const User = new Schema({
   //_id: { type: Sequelize.INTEGER, primaryKey: true},
   // first_name: {type: String, required: true, minLength: 0, maxLength: 255},
   // last_name: {type: String, required: true, minLength: 0, maxLength: 255},
-  user_name: { type: String, required: true, minlength: 3  , maxlength: 255},
+  user_name: { type: String, required: true, minlength: 2, maxlength: 255},
   user_password: { type: String, required: true, minLength: 8, maxLength: 1024},
   email: { type: String, required: true, minlength:6, maxlength: 255},
   //facebook: { type: String, maxlength: 255},

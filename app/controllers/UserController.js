@@ -1,23 +1,49 @@
-const User = require('../models/User');
+const User = require('../models/User')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 class UserController {
 
-    //Login and Sign in user
-    registerUser(req, res) {
-        //check user_name and email exist in database
-        User.findOne({ user_name: req.body.user_name ,email: req.body.email}, function(err, users) {
-            if(users) res.status(400).send('exist')
-        })
+    //Sign in user
+    async registerUser(req, res) {
+        //check email exist in database
+        const checkEmail = await User.findOne({email: req.body.email})
+        if(checkEmail) return res.status(400).send('Email already exists')
 
+        //hash password
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(req.body.user_password, salt)
             
-        const users = new User(req.body)
+        const users = new User({user_name: req.body.user_name, user_password: hashedPassword, email: req.body.email})
         users.save()
         .then(users => res.json(users))
         .catch(err => res.status(500).json(err))
     }
 
-    loginUser(req, res) {
+    //login users
+    async loginUser(req, res) {
+        //check email exist in database
+        const checkLogin = await User.findOne({email: req.body.email})
+        if(!checkLogin) return res.status(400).send('Email not found')
 
+        //check password
+        const checkPassword = await bcrypt.compare(req.body.user_password, checkLogin.user_password)
+        if(!checkPassword) return res.status(400).send('Invalid Password')
+
+        //create token
+        const token = jwt.sign({_id: checkLogin._id}, process.env.ACCESS_TOKEN_SECRET);
+        res.header('token', token).send(token)
+
+    }
+
+    //token
+    fetchData(req, res) {
+        res.json({
+            data: {
+                age: 50,
+                gender: 50,
+            }
+        })
     }
     
     //API

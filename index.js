@@ -5,6 +5,7 @@ const port = process.env.PORT || 3000
 const route = require('./routes')
 const db = require('./config/db')
 
+
 db.connect();
 
 //middleware (body)
